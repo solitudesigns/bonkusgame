@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/Solana SDK/1.2.8/Sample Wallet/Solana Wallet/Scenes/wallet_scene.unity
     guid: 8b3834b526b1d9f4687af110b68aeda9
   - enabled: 1
@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 44984fb3114b542a7a6c4a7b1c76aeff
+  - enabled: 1
+    path: Assets/Scenes/JoinLobby.unity
+    guid: 7aa7f7c2270794c53b055f4e0ef5d067
+  - enabled: 1
+    path: Assets/Scenes/WinGame.unity
+    guid: 1f4135884aed44706a6c26be1c9e480f
   m_configObjects: {}

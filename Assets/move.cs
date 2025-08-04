@@ -1,49 +1,76 @@
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    public float minSpeed = 3f;
+    public float maxSpeed = 10f;
+    public float acceleration = 5f;
 
-    [Header("Touch Input")]
-    public LeftTouchController touchController; // Assign in Inspector
+    private float currentSpeed;
+    private Rigidbody2D rb;
+    private PhotonView view;
+    private Vector2 lastDir;
+    private bool facingRight = true;  // 🟢 track current facing
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
+        rb.gravityScale = 0;
+        rb.drag = 0;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-            Debug.LogWarning("No SpriteRenderer found on the Player!");
+        view = GetComponent<PhotonView>();
+        currentSpeed = minSpeed;
     }
 
     void FixedUpdate()
     {
-        Vector2 move = Vector2.zero;
+        if (!view.IsMine) return;
 
-        // Old Unity Input System: Keyboard + Gamepad axes
-        float horizontal = Input.GetAxisRaw("Horizontal"); // includes A/D, ←/→, left stick
-        float vertical = Input.GetAxisRaw("Vertical");     // includes W/S, ↑/↓, left stick
+        Vector2 dir = Vector2.zero;
 
-        move = new Vector2(horizontal, vertical);
-
-        // Touch fallback if no input detected
-        if (move == Vector2.zero && touchController != null)
+        if (MobileInput.Instance != null)
         {
-            move = touchController.direction;
+            if (MobileInput.Instance.left) dir.x = -1;
+            if (MobileInput.Instance.right) dir.x = 1;
+            if (MobileInput.Instance.up) dir.y = 1;
+            if (MobileInput.Instance.down) dir.y = -1;
         }
 
-        move = move.normalized;
-        rb.velocity = move * speed;
-
-        // Flip sprite
-        if (spriteRenderer != null)
+        // ✅ Accelerate only while holding a direction
+        if (dir != Vector2.zero)
         {
-            if (move.x < -0.1f) spriteRenderer.flipX = true;
-            else if (move.x > 0.1f) spriteRenderer.flipX = false;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.fixedDeltaTime);
+            lastDir = dir.normalized;
         }
+        else
+        {
+            currentSpeed = minSpeed;
+            lastDir = Vector2.zero;
+        }
+
+        // ✅ Apply movement
+        rb.velocity = (lastDir != Vector2.zero) ? lastDir * currentSpeed : Vector2.zero;
+
+        // ✅ Flip entire character left/right
+        if (dir.x < 0 && facingRight)
+        {
+            Flip();
+        }
+        else if (dir.x > 0 && !facingRight)
+        {
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;              // 🔥 invert X scale
+        transform.localScale = scale;
     }
 }

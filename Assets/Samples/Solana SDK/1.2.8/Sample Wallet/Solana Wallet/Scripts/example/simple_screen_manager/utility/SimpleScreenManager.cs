@@ -18,23 +18,7 @@ namespace Solana.Unity.SDK.Example
 
         private void OnEnable()
         {
-            var ratioFitter = gameObject.GetComponent<AspectRatioFitter>();
-            if (Screen.width > Screen.height)
-            {
-
-                if (ratioFitter == null)
-                {
-                    ratioFitter = gameObject.AddComponent<AspectRatioFitter>();
-                }
-                ratioFitter.aspectRatio = 0.9f;
-                ratioFitter.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
-            }
-            else
-            {
-                var ft = gameObject.GetComponent<AspectRatioFitter>();
-                if(ft)
-                    Destroy(ft);
-            }
+           
         }
 
         private void PopulateDictionary()

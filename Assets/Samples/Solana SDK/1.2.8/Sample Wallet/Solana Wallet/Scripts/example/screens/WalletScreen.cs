@@ -20,13 +20,7 @@ namespace Solana.Unity.SDK.Example
         [SerializeField]
         private Button refreshBtn;
         [SerializeField]
-        private Button sendBtn;
-        [SerializeField]
-        private Button signBtn;
-        [SerializeField]
         private Button receiveBtn;
-        [SerializeField]
-        private Button swapBtn;
         [SerializeField]
         private Button logoutBtn;
         [SerializeField]
@@ -50,26 +44,14 @@ namespace Solana.Unity.SDK.Example
         {
             refreshBtn.onClick.AddListener(RefreshWallet);
 
-            sendBtn.onClick.AddListener(() =>
-            {
-                TransitionToTransfer();
-            });
             
-            signBtn.onClick.AddListener(() =>
-            {
-                manager.ShowScreen(this, "sign_screen");
-            });
 
             receiveBtn.onClick.AddListener(() =>
             {
                 manager.ShowScreen(this, "receive_screen");
             });
             
-            swapBtn.onClick.AddListener(() =>
-            {
-                manager.ShowScreen(this, "swap_screen_ag");
-            });
-
+           
             logoutBtn.onClick.AddListener(() =>
             {
                 Web3.Instance.Logout();
@@ -88,11 +70,7 @@ namespace Solana.Unity.SDK.Example
 
         private void OnWalletChangeState()
         {
-            if(Web3.Wallet == null) return;
-            swapBtn.transition = Web3.Wallet.RpcCluster == RpcCluster.MainNet ?
-                Selectable.Transition.Animation
-                : Selectable.Transition.ColorTint;
-            swapBtn.interactable = Web3.Wallet.RpcCluster == RpcCluster.MainNet;
+          
 
         }
 

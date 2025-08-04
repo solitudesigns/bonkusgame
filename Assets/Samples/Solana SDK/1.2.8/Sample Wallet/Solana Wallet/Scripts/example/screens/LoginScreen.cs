@@ -20,20 +20,17 @@ namespace Solana.Unity.SDK.Example
         [SerializeField]
         private Button loginBtnSms;
         [SerializeField]
-        private Button loginBtnXNFT;
-        [SerializeField]
+
         private TextMeshProUGUI messageTxt;
         [SerializeField]
-        private TMP_Dropdown dropdownRpcCluster;
+    
 
         private void OnEnable()
         {
-            dropdownRpcCluster.interactable = true;
             passwordInputField.text = string.Empty;
 
             if (Web3.Wallet != null)
             {
-                dropdownRpcCluster.interactable = false;
                 manager.ShowScreen(this, "wallet_screen");
                 gameObject.SetActive(false);
             }
@@ -48,9 +45,6 @@ namespace Solana.Unity.SDK.Example
             loginBtn.onClick.AddListener(LoginChecker);
             loginBtnWalletAdapter.onClick.AddListener(LoginCheckerWalletAdapter);
             loginBtnSms.onClick.AddListener(LoginCheckerSms);
-            loginBtnXNFT.onClick.AddListener(LoginCheckerWalletAdapter);
-            
-            loginBtnXNFT.gameObject.SetActive(false);
 
             if (Application.platform is RuntimePlatform.LinuxEditor or RuntimePlatform.WindowsEditor or RuntimePlatform.OSXEditor)
             {
@@ -94,7 +88,6 @@ namespace Solana.Unity.SDK.Example
         {
             if (account != null)
             {
-                dropdownRpcCluster.interactable = false;
                 manager.ShowScreen(this, "wallet_screen");
                 messageTxt.gameObject.SetActive(false);
                 gameObject.SetActive(false);
