@@ -1,6 +1,5 @@
 # 🐺 Bonk Us – Multiplayer Social Deduction Game
 
-### 📱 [**Download APK**](https://drive.google.com/file/d/1J8ZLFtZdRxqs42BWo23LYNbbXoXqJSSh/view?usp=sharing)
 
 Bonk Us is an exciting **multiplayer social deduction game** where players must work together to complete tasks while identifying the **Wolf** among them. The Wolf must sabotage and outsmart the Bonks to win.
 
@@ -66,7 +65,7 @@ Bonk Us is an exciting **multiplayer social deduction game** where players must 
 ## 📌 Version
 
 - **Current Build:** `v1.0.0 (Beta)`  
-- **Platform:** Android (APK)  
+- **Platform:** Android
 - **Network:** Solana Devnet  
 
 ---
